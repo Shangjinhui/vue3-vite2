@@ -17,6 +17,7 @@ export default defineConfig({
     }
   },
   base: process.env.NODE_ENV === 'production' ? './' : '',
+  outDir: 'dist',
   // css: {
   //   preprocessorOptions: {
   //     less: {

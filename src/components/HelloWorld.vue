@@ -13,20 +13,37 @@
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
+    
   </p>
+  <div @click="giveParent">给你</div>
 </template>
 
-<script setup>
-import { defineProps, reactive,toRefs,computed } from 'vue'
+<script>
+import { reactive, toRefs, computed } from "vue";
+export default {
+  props: {
+    place: {
+      type: Object,
+      default: {},
+    },
+  },
+  setup(props, { emit }) {
+    //分解context对象取出emit
+    console.log(props.place.address, "组件");
 
-defineProps({
-  msg: String
-})
+    const state = reactive({
+      count: 0,
+      dcount: computed(() => state.count * 2),
+      msg: computed(() => props.place.address),
+      
+    });
 
-const state = reactive({ count: 0,dcount:computed(()=>state.count*2) })
-const {count,dcount} = {...toRefs(state)}
-
-
+    const giveParent = () => {
+        emit('giveParent',state.count)
+      }
+    return { ...toRefs(state),giveParent };
+  },
+};
 </script>
 
 <style scoped>
